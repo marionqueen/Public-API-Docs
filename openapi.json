@@ -1,17 +1,21 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "API Documentation",
+    "title": "Loan Application API",
     "version": "1.0.0",
-    "description": "Documentation for your API endpoints",
+    "description": "API for managing high-risk loan applications",
     "contact": {
       "name": "Marion Queen Ramos",
-      "email": "your.email@example.com"
+      "email": "marionqueen.email@example.com"
     }
   },
   "servers": [
     {
-      "url": "https://MarionQueen-TestProduction-api.com",
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    },
+    {
+      "url": "https://api.yourdomain.com",
       "description": "Production server"
     }
   ],
@@ -20,7 +24,8 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer",
-        "bearerFormat": "JWT"
+        "bearerFormat": "JWT",
+        "description": "JWT token obtained from authentication"
       }
     },
     "schemas": {
@@ -243,6 +248,44 @@
           "status": "error",
           "message": "Loan application not found",
           "code": "LOAN_NOT_FOUND"
+        }
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Authentication information is missing or invalid",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Invalid or expired token"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ForbiddenError": {
+        "description": "User does not have sufficient permissions",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "error"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Access denied - Insufficient permissions"
+                }
+              }
+            }
+          }
         }
       }
     }
