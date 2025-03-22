@@ -5,13 +5,13 @@
     "version": "1.0.0",
     "description": "Documentation for your API endpoints",
     "contact": {
-      "name": "Your Name",
+      "name": "Marion Queen Ramos",
       "email": "your.email@example.com"
     }
   },
   "servers": [
     {
-      "url": "https://your-production-api.com",
+      "url": "https://MarionQueen-TestProduction-api.com",
       "description": "Production server"
     }
   ],
