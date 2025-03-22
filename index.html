@@ -21,6 +21,21 @@
       margin: 0;
       background: #fafafa;
     }
+    
+    /* Custom styles for header */
+    .swagger-ui .topbar {
+      background-color: #1a365d;
+    }
+    
+    /* Custom title styling */
+    .swagger-ui .info .title {
+      color: #2c5282;
+    }
+    
+    /* Custom contact info styling */
+    .swagger-ui .info a {
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -43,7 +58,14 @@
         plugins: [
           SwaggerUIBundle.plugins.DownloadUrl
         ],
-        layout: "StandaloneLayout"
+        layout: "StandaloneLayout",
+        // Customization options
+        docExpansion: 'list',
+        defaultModelsExpandDepth: 1,
+        displayRequestDuration: true,
+        filter: true,
+        // Configure authorization persistence
+        persistAuthorization: true
       });
     };
   </script>
