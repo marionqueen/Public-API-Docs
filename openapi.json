@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Loan Application API",
+    "title": "API Documentation & Security Implementation",
     "version": "1.0.0",
-    "description": "API for managing high-risk loan applications",
+    "description": "Comprehensive documentation for secure API integration with OpenAPI standards, environment variable management, and security features including Helmet.js and CORS protection mechanisms.",
     "contact": {
       "name": "Marion Queen Ramos",
       "email": "marionqueen.email@example.com"
@@ -25,7 +25,7 @@
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT",
-        "description": "JWT token obtained from authentication"
+        "description": "Enter your JWT token in the format: Bearer <token>. Tokens are obtained from the authentication endpoints."
       }
     },
     "schemas": {
@@ -37,7 +37,7 @@
           "approved",
           "rejected"
         ],
-        "description": "Represents the possible states of a loan application"
+        "description": "Represents the possible states of a resource"
       },
       "Loan": {
         "type": "object",
@@ -51,20 +51,20 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Unique identifier for the loan"
+            "description": "Unique identifier for the resource"
           },
           "userId": {
             "type": "string",
-            "description": "ID of the user who applied for the loan"
+            "description": "ID of the user who created the resource"
           },
           "amount": {
             "type": "number",
             "format": "float",
-            "description": "The requested loan amount"
+            "description": "The requested amount"
           },
           "purpose": {
             "type": "string",
-            "description": "Purpose or reason for the loan"
+            "description": "Purpose or reason"
           },
           "status": {
             "$ref": "#/components/schemas/LoanStatus"
@@ -72,22 +72,22 @@
           "createdAt": {
             "type": "string",
             "format": "date-time",
-            "description": "Date and time when the loan application was created"
+            "description": "Creation timestamp with ISO 8601 format"
           },
           "reviewedAt": {
             "type": "string",
             "format": "date-time",
-            "description": "Date and time when the loan was reviewed"
+            "description": "Review timestamp with ISO 8601 format"
           },
           "approvedAt": {
             "type": "string",
             "format": "date-time",
-            "description": "Date and time when the loan was approved"
+            "description": "Approval timestamp with ISO 8601 format"
           },
           "riskScore": {
             "type": "number",
             "format": "float",
-            "description": "Risk assessment score calculated for the loan"
+            "description": "Risk assessment score calculated for the resource"
           }
         },
         "example": {
@@ -109,16 +109,16 @@
         "properties": {
           "userId": {
             "type": "string",
-            "description": "ID of the user applying for the loan"
+            "description": "ID of the user creating the resource"
           },
           "amount": {
             "type": "number",
             "format": "float",
-            "description": "The requested loan amount"
+            "description": "The requested amount"
           },
           "purpose": {
             "type": "string",
-            "description": "Purpose or reason for the loan"
+            "description": "Purpose or reason"
           }
         },
         "example": {
@@ -132,44 +132,44 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Unique identifier for the loan"
+            "description": "Unique identifier for the resource"
           },
           "userId": {
             "type": "string",
-            "description": "ID of the user who applied for the loan"
+            "description": "ID of the user who created the resource"
           },
           "amount": {
             "type": "number",
             "format": "float",
-            "description": "The requested loan amount"
+            "description": "The requested amount"
           },
           "purpose": {
             "type": "string",
-            "description": "Purpose or reason for the loan"
+            "description": "Purpose or reason"
           },
           "status": {
             "type": "string",
-            "description": "Current status of the loan application"
+            "description": "Current status of the resource"
           },
           "createdAt": {
             "type": "string",
             "format": "date-time",
-            "description": "Date and time when the loan application was created"
+            "description": "Creation timestamp with ISO 8601 format"
           },
           "reviewedAt": {
             "type": "string",
             "format": "date-time",
-            "description": "Date and time when the loan was reviewed"
+            "description": "Review timestamp with ISO 8601 format"
           },
           "approvedAt": {
             "type": "string",
             "format": "date-time",
-            "description": "Date and time when the loan was approved"
+            "description": "Approval timestamp with ISO 8601 format"
           },
           "riskScore": {
             "type": "number",
             "format": "float",
-            "description": "Risk assessment score calculated for the loan"
+            "description": "Risk assessment score calculated for the resource"
           }
         },
         "example": {
@@ -218,7 +218,7 @@
             "id": "123",
             "status": "pending"
           },
-          "message": "Loan application submitted successfully"
+          "message": "Resource created successfully"
         }
       },
       "ErrorResponse": {
@@ -246,8 +246,70 @@
         },
         "example": {
           "status": "error",
-          "message": "Loan application not found",
-          "code": "LOAN_NOT_FOUND"
+          "message": "Resource not found",
+          "code": "RESOURCE_NOT_FOUND"
+        }
+      },
+      "SecurityFeatures": {
+        "type": "object",
+        "description": "Security implementations in this API",
+        "properties": {
+          "helmet": {
+            "type": "object",
+            "description": "Helmet.js implementation for HTTP security headers",
+            "properties": {
+              "contentSecurityPolicy": {
+                "type": "boolean",
+                "description": "Protection against XSS attacks"
+              },
+              "xssFilter": {
+                "type": "boolean",
+                "description": "Cross-site scripting protection"
+              },
+              "noSniff": {
+                "type": "boolean",
+                "description": "MIME type sniffing protection"
+              },
+              "frameGuard": {
+                "type": "boolean",
+                "description": "Clickjacking protection"
+              }
+            }
+          },
+          "cors": {
+            "type": "object",
+            "description": "Cross-Origin Resource Sharing configuration",
+            "properties": {
+              "allowedOrigins": {
+                "type": "array",
+                "description": "Domains allowed to access the API",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "allowedMethods": {
+                "type": "array",
+                "description": "HTTP methods allowed for cross-origin requests",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "envVars": {
+            "type": "object",
+            "description": "Environment variable management",
+            "properties": {
+              "dotenv": {
+                "type": "boolean",
+                "description": "Using dotenv for configuration management"
+              },
+              "sensitiveDataProtection": {
+                "type": "boolean",
+                "description": "Sensitive data is protected in environment variables"
+              }
+            }
+          }
         }
       }
     },
@@ -298,9 +360,10 @@
   "paths": {
     "/api/v1/admin/users/{uid}/role": {
       "put": {
-        "summary": "Set user role (admin only)",
+        "summary": "Set user role with secure role-based authorization",
+        "description": "Securely changes a user's role with proper authorization checks and validation. Protected by JWT authentication and role-based access control.",
         "tags": [
-          "Admin"
+          "Authorization"
         ],
         "security": [
           {
@@ -353,9 +416,10 @@
     },
     "/api/v1/admin/users/{uid}": {
       "get": {
-        "summary": "Get user details (admin only)",
+        "summary": "Get user details with secure authentication",
+        "description": "Retrieves user information with proper authentication and authorization. Protected by JWT authentication and role verification.",
         "tags": [
-          "Admin"
+          "Authorization"
         ],
         "security": [
           {
@@ -387,9 +451,10 @@
     },
     "/api/v1/loans": {
       "post": {
-        "summary": "Create a new high-risk loan application",
+        "summary": "Create resource with secure validation",
+        "description": "Securely creates a new resource with input validation, sanitization, and proper error handling. Protected by JWT authentication and includes request validation middleware.",
         "tags": [
-          "Loans"
+          "API Resources"
         ],
         "security": [
           {
@@ -408,7 +473,7 @@
         },
         "responses": {
           "201": {
-            "description": "Loan application created successfully",
+            "description": "Resource created successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -423,9 +488,10 @@
         }
       },
       "get": {
-        "summary": "Get all loan applications (restricted to officers and managers)",
+        "summary": "List resources with role-based access control",
+        "description": "Securely retrieves resources with role-based access control. Implements pagination and filtering with proper input validation. Protected by JWT authentication and role verification.",
         "tags": [
-          "Loans"
+          "API Resources"
         ],
         "security": [
           {
@@ -434,7 +500,7 @@
         ],
         "responses": {
           "200": {
-            "description": "List of loan applications retrieved successfully",
+            "description": "List of resources retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -451,9 +517,10 @@
     },
     "/api/v1/loans/{id}/review": {
       "put": {
-        "summary": "Review a loan application (restricted to officers)",
+        "summary": "Update resource with middleware protection",
+        "description": "Securely updates a resource with proper authorization checks. Protected by multiple middleware layers including authentication, authorization, validation, and error handling.",
         "tags": [
-          "Loans"
+          "API Resources"
         ],
         "security": [
           {
@@ -472,7 +539,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Loan application reviewed successfully",
+            "description": "Resource updated successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -482,16 +549,17 @@
             }
           },
           "404": {
-            "description": "Loan application not found"
+            "description": "Resource not found"
           }
         }
       }
     },
     "/api/v1/loans/{id}/approve": {
       "put": {
-        "summary": "Approve a loan application (restricted to managers)",
+        "summary": "Approve resource with hierarchical permissions",
+        "description": "Demonstrates hierarchical role-based permissions with secure authentication workflow. Protected by JWT authentication and multi-level authorization checks.",
         "tags": [
-          "Loans"
+          "API Resources"
         ],
         "security": [
           {
@@ -510,7 +578,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Loan application approved successfully",
+            "description": "Resource approval completed successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -520,11 +588,45 @@
             }
           },
           "404": {
-            "description": "Loan application not found"
+            "description": "Resource not found"
+          }
+        }
+      }
+    },
+    "/api/docs/security-features": {
+      "get": {
+        "summary": "API Security Features Documentation",
+        "description": "Provides detailed information about the security features implemented in this API including Helmet.js configuration, CORS setup, and secure environment variable management.",
+        "tags": [
+          "Documentation"
+        ],
+        "responses": {
+          "200": {
+            "description": "Security features information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SecurityFeatures"
+                }
+              }
+            }
           }
         }
       }
     }
   },
-  "tags": []
+  "tags": [
+    {
+      "name": "Authorization",
+      "description": "Endpoints demonstrating secure authentication and role-based authorization"
+    },
+    {
+      "name": "API Resources",
+      "description": "Resource endpoints with comprehensive security implementations"
+    },
+    {
+      "name": "Documentation",
+      "description": "API documentation and security features exploration"
+    }
+  ]
 }

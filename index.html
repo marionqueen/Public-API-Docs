@@ -31,28 +31,7 @@
       color: #1e3a8a;
     }
     
-    /* Add a security badge to authentication endpoints */
-    .swagger-ui .opblock-tag[data-tag="Authentication"] .opblock-tag-section h3:after {
-      content: "🔒";
-      margin-left: 10px;
-    }
-    
-    /* Highlight security-related schema definitions */
-    .swagger-ui .model-title:contains("Security") {
-      color: #1e3a8a;
-      font-weight: bold;
-    }
-    
-    /* Custom footer */
-    .custom-footer {
-      text-align: center;
-      margin-top: 50px;
-      padding: 20px;
-      background-color: #f3f4f6;
-      color: #374151;
-    }
-    
-    /* Security features highlight box */
+    /* Security info box */
     .security-features {
       margin: 20px 0;
       padding: 15px;
@@ -69,24 +48,68 @@
     .security-features ul {
       margin-bottom: 0;
     }
+    
+    /* Custom footer */
+    .custom-footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px;
+      background-color: #f3f4f6;
+      color: #374151;
+    }
+    
+    /* Security badge for endpoints */
+    .security-badge {
+      display: inline-block;
+      background-color: #1e3a8a;
+      color: white;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 8px;
+    }
+    
+    /* Tag colors for security-focused tags */
+    .swagger-ui .opblock-tag-section h3[data-tag="Authorization"] span::after {
+      content: "🔒";
+      margin-left: 8px;
+    }
+    
+    .swagger-ui .opblock-tag-section h3[data-tag="Documentation"] span::after {
+      content: "📚";
+      margin-left: 8px;
+    }
   </style>
 </head>
 
 <body>
-  <div id="swagger-ui"></div>
-  
-  <!-- Add a custom security features section before the Swagger UI -->
-  <div class="security-features" id="security-box" style="display: none;">
-    <h3>Security Implementation Details</h3>
+  <!-- Header with security focus -->
+  <div id="header-content" style="display: none;">
+    <h2 style="color: #1e3a8a;">API Documentation & Security Implementation</h2>
+    <p>This documentation demonstrates comprehensive API security practices and documentation standards.</p>
+    
+    <div class="security-features">
+      <h3>Key Security Features</h3>
+      <ul>
+        <li><strong>Environment Variables:</strong> Secure configuration management with dotenv</li>
+        <li><strong>Helmet.js:</strong> Protection against XSS, CSRF, and other web vulnerabilities</li>
+        <li><strong>CORS:</strong> Controlled cross-origin resource sharing</li>
+        <li><strong>JWT Authentication:</strong> Secure token-based authentication</li>
+        <li><strong>Role-Based Authorization:</strong> Granular access control</li>
+      </ul>
+    </div>
+    
+    <p>This implementation follows OpenAPI 3.0 standards to provide:</p>
     <ul>
-      <li><strong>Environment Variables:</strong> Secure configuration handling with dotenv</li>
-      <li><strong>Helmet.js:</strong> Protection against XSS, CSRF, and other common web vulnerabilities</li>
-      <li><strong>CORS:</strong> Controlled cross-origin resource sharing for enhanced API security</li>
-      <li><strong>JWT Authentication:</strong> Secure token-based authentication system</li>
-      <li><strong>Role-Based Authorization:</strong> Granular endpoint access control</li>
+      <li>Interactive API documentation</li>
+      <li>Request/response examples</li>
+      <li>Authentication workflows</li>
+      <li>Security schema definitions</li>
     </ul>
   </div>
-
+  
+  <div id="swagger-ui"></div>
+  
   <div class="custom-footer">
     <p>API Documentation & Security Implementation by Marion Queen Ramos</p>
     <p><small>Documentation generated with OpenAPI 3.0 and Swagger UI</small></p>
@@ -96,14 +119,14 @@
   <script src="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui-standalone-preset.js"></script>
   <script>
     window.onload = function() {
-      // Move security box to proper location
+      // Move custom header content into the Swagger UI
       setTimeout(function() {
         const infoContainer = document.querySelector('.swagger-ui .info');
-        const securityBox = document.getElementById('security-box');
+        const headerContent = document.getElementById('header-content');
         
-        if (infoContainer && securityBox) {
-          securityBox.style.display = 'block';
-          infoContainer.appendChild(securityBox);
+        if (infoContainer && headerContent) {
+          headerContent.style.display = 'block';
+          infoContainer.appendChild(headerContent);
         }
       }, 500);
       
@@ -120,11 +143,14 @@
           SwaggerUIBundle.plugins.DownloadUrl
         ],
         layout: "StandaloneLayout",
+        // Customization options
         docExpansion: 'list',
         defaultModelsExpandDepth: 1,
         displayRequestDuration: true,
         filter: true,
+        // Configure authorization persistence
         persistAuthorization: true,
+        // Enable syntax highlighting
         syntaxHighlight: {
           activated: true,
           theme: "agate"
